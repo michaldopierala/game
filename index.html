@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    body{
+      padding: 0px;
+      margin: 0px;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    }
+
+    #field{
+      position: relative;
+      background-color: mediumspringgreen;
+      width: 100%;
+      height: 100vh;
+    }
+
+    #display{
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 200px;
+      height: 100px;
+      padding: 10px;
+      background-color: bisque;
+      border-radius: 15px;
+    }
+
+    #ball{
+      position: absolute;
+      top:0px;
+      left: 0px;
+      border-radius: 35px;
+      padding:30px;
+      background-color: palevioletred;
+    }
+
+  </style>
+</head>
+
+
+<body>
+  <div id="field" >
+    <div id="display">
+      x:
+      <span id="x">n/a</span><span>px</span>
+      <br>
+      y:
+      <span id="y">n/a</span><span>px</span>
+      <br>
+      ball position: <span id="ballX"></span>
+    </div>
+
+    <div id="ball">
+
+    </div>
+    
+  </div>
+  
+
+
+
+
+  <script>
+    const box = document.getElementById("field");
+    const pageX = document.getElementById("x");
+    const pageY = document.getElementById("y");
+    const ball = document.getElementById("ball");
+    const ballX = document.getElementById("ballX");
+    let positionX = ball.style.top = "150px";
+    let positionY = ball.style.left = "150px";
+    
+    box.addEventListener("mousemove", updateDisplay);
+    // box.addEventListener("mouseenter", updateDisplay);
+    // box.addEventListener("mouseleave", updateDisplay);
+    // ball.addEventListener("click", moveBall);
+
+    ball.addEventListener('mousedown', myFunction);
+  function myFunction(){
+    box.addEventListener("mousemove", showPosition);
+  }
+
+  function showPosition(event){
+    // posX.innerHTML= event.offsetX; 
+    // posY.innerHTML= event.offsetY;
+    ball.style.top=(event.pageY-25)+"px";
+     ball.style.left =(event.pageX-25)+"px";
+    
+  }
+
+  box.addEventListener("mouseup", myScript);
+ function myScript(){
+   box.removeEventListener("mousemove", showPosition);
+}
+
+
+    function updateDisplay(event) {
+      console.log('mousemove');
+     pageX.innerHTML=event.pageX;
+     pageY.innerHTML=event.pageY;
+     
+
+    //  ball.style.top=(event.pageY-25)+"px";
+    //  ball.style.left =(event.pageX-25)+"px";
+}
+
+// function moveBall(event){
+
+// ballX.innerText = ball.style.top;
+// ball.style.top = "100px";
+// console.log(positionX);
+// }
+
+
+
+
+  </script>
+</body>
+</html>
