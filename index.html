@@ -51,52 +51,70 @@
   <script>
     const box = document.getElementById("field");
     const ball = document.getElementById("ball");
-
+    // parameters for ball movement after releasing the ball 
+    let x;
+    let y;
+    //position of the ball at mouseup event and during flight
+    let PositionX;
+    let PositionY;
     // initial position of ball 
-    let positionX = ball.style.top = "350px";
-    let positionY = ball.style.left = "450px";
-    //position of the ball at mouseup event 
-    let mouseupPositionX;
-    let mouseupPositionY;
+    let initPositionX = 350;
+    let initPositionY = 350;
+    ball.style.top = initPositionX+"px";
+    ball.style.left = initPositionY+"px";
     
-    ball.addEventListener('mousedown', startMove);
-    box.addEventListener("mouseup", stopMove);
+    ball.addEventListener('mousedown', startMouse);
+    ball.addEventListener("mouseup", stopMouse);  // remember that before element was box not ball  
 
 
-// create movement of the ball 
-  function startMove(){
+// movement of the ball with mouse
+  function startMouse(){
     box.addEventListener("mousemove", updatePosition);
   }
+
+  function stopMouse(event){
+   box.removeEventListener("mousemove", updatePosition);
+   ballFlight(event);
+}
+
   function updatePosition(event){
     ball.style.top=(event.pageY-25)+"px";
-     ball.style.left =(event.pageX-25)+"px";
+    ball.style.left =(event.pageX-25)+"px";
   }
 
- function stopMove(event){
-   box.removeEventListener("mousemove", updatePosition);
-   mouseupPositionX = event.pageX-25;
-   mouseupPositionY = event.pageY-25;
-   console.log(mouseupPositionX);
-   console.log(mouseupPositionY);
+ 
+
+
+function ballFlight(ev){
+  //start position 
+  PositionX = ev.pageX-25;
+  PositionY = ev.pageY-25;
+  //parameters   
+  x = initPositionX-PositionX;
+  y = initPositionY-PositionY;
    
-   setInterval(throwBall, 1);
+
+  // Flight after releasing the ball 
+   setInterval(Flight, 1);
+  function Flight() {
+    // console.log(x);console.log(y);
+    // gravity++;
+    PositionX+= x*0.01;
+    PositionY+= y*0.01;
+    ball.style.left =(PositionX)+"px";
+    ball.style.top=(PositionY)+"px";
+}
+
 }
 
 
-// Movement after releasing the ball 
 
 
-function throwBall() {
-  mouseupPositionX+= 1;
-  mouseupPositionY-= 1;
-  ball.style.left =(mouseupPositionX)+"px";
-  ball.style.top=(mouseupPositionY)+"px";
-  
-
-  
-}
 
 
+
+
+// FOR BALL STOP AFTER HITTING THE WALL I MAY CREATE NEW FILE - CHECK GLOBAL VARIABLES
 
   </script>
 </body>
