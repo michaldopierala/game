@@ -26,8 +26,19 @@
       top:0px;
       left: 0px;
       border-radius: 35px;
-      padding:30px;
+      padding:20px;
       background-color: palevioletred;
+    }
+
+    #dot{
+      position: absolute;
+      top: 368px;
+      left: 368px;
+      color: slategrey;
+      border-radius: 35px;
+      padding: 2px;
+      background-color: slategrey;
+      z-index: 2;
     }
 
   </style>
@@ -36,11 +47,8 @@
 
 <body>
   <div id="field" >
-
-
-    
-    <div id="ball">
-    </div>
+    <div id="ball"></div>
+    <!-- <div id="dot"></div> -->
     
   </div>
   
@@ -89,20 +97,29 @@ function ballFlight(ev){
   //start position 
   PositionX = ev.pageX-25;
   PositionY = ev.pageY-25;
-  //parameters   
+  //parameters - angle and speed of the flight   
   x = initPositionX-PositionX;
   y = initPositionY-PositionY;
    
 
   // Flight after releasing the ball 
-   setInterval(Flight, 1);
+  let s=1;
+  const myInterval = setInterval(Flight, 1);
   function Flight() {
-    // console.log(x);console.log(y);
-    // gravity++;
+    // st++; 
+    console.log(s++);
+    // console.log((s*s)*0.005); 
     PositionX+= x*0.01;
-    PositionY+= y*0.01;
+    PositionY+= y*0.01+((s*s*7)*0.000005);
     ball.style.left =(PositionX)+"px";
     ball.style.top=(PositionY)+"px";
+
+    // stop the ball if it touches the walls 
+    if(PositionX>window.innerWidth-45 || PositionX<0 || PositionY>window.innerHeight-45 || PositionY<0){
+      console.log("out");
+      clearInterval(myInterval);
+      setTimeout( ()=> location.reload(), 1500);
+    }
 }
 
 }
@@ -115,6 +132,8 @@ function ballFlight(ev){
 
 
 // FOR BALL STOP AFTER HITTING THE WALL I MAY CREATE NEW FILE - CHECK GLOBAL VARIABLES
+console.log(window.innerWidth);
+console.log(window.innerHeight);
 
   </script>
 </body>
