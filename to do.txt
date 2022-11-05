@@ -1,0 +1,3 @@
+-get width of the screen
+-create nested stopFlight function 
+-this function will be activeted inside IF ELSE statement.

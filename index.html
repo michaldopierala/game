@@ -30,16 +30,29 @@
       background-color: palevioletred;
     }
 
-    #dot{
+    #bird{
       position: absolute;
-      top: 368px;
-      left: 368px;
+      top: 168px;
+      /* right: 768px; */
       color: slategrey;
-      border-radius: 35px;
-      padding: 2px;
+      border-radius: 5px;
+      padding: 20px;
       background-color: slategrey;
-      z-index: 2;
     }
+
+    #square{
+      position: absolute;
+      top: 168px;
+      right: 68px;
+      color: slategrey;
+      border: 1px slategrey solid;
+      padding: 20px;
+      /* background-color: slategrey; */
+      width:300px;
+      height:300px;
+    }
+
+
 
   </style>
 </head>
@@ -48,7 +61,8 @@
 <body>
   <div id="field" >
     <div id="ball"></div>
-    <!-- <div id="dot"></div> -->
+    <div id="bird"></div>
+    <div id="square"></div>
     
   </div>
   
@@ -59,7 +73,7 @@
   <script>
     const box = document.getElementById("field");
     const ball = document.getElementById("ball");
-    // parameters for ball movement after releasing the ball 
+    // direction parameters for ball movement after releasing the ball 
     let x;
     let y;
     //position of the ball at mouseup event and during flight
@@ -70,6 +84,17 @@
     let initPositionY = 350;
     ball.style.top = initPositionX+"px";
     ball.style.left = initPositionY+"px";
+    //initial location of the bird
+    const bird = document.getElementById("bird"); 
+    let birdX =  550;
+    let birdY =  250;
+    let birdPadding = 20;
+    bird.style.padding=birdPadding+"px";
+    bird.style.left = birdX+"px";
+    bird.style.top = birdY+"px";
+
+
+
     
     ball.addEventListener('mousedown', startMouse);
     ball.addEventListener("mouseup", stopMouse);  // remember that before element was box not ball  
@@ -110,16 +135,26 @@ function ballFlight(ev){
     console.log(s++);
     // console.log((s*s)*0.005); 
     PositionX+= x*0.01;
-    PositionY+= y*0.01+((s*s*7)*0.000005);
+    PositionY+= y*0.01+((s*s*5)*0.000005);
     ball.style.left =(PositionX)+"px";
     ball.style.top=(PositionY)+"px";
 
     // stop the ball if it touches the walls 
     if(PositionX>window.innerWidth-45 || PositionX<0 || PositionY>window.innerHeight-45 || PositionY<0){
-      console.log("out");
       clearInterval(myInterval);
       setTimeout( ()=> location.reload(), 1500);
     }
+
+    //the bird was hit
+    if (PositionX>(birdX-1.7*birdPadding) && PositionX<(birdX+1.7*birdPadding)) {
+      if (PositionY>(birdY-1.7*birdPadding) && PositionY<(birdY+1.7*birdPadding)) {
+        bird.style.backgroundColor = "red";
+        clearInterval(myInterval);
+        setTimeout( ()=> location.reload(), 2500);
+
+      }
+    } 
+
 }
 
 }
