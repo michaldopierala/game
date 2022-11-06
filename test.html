@@ -73,10 +73,10 @@
     ball.style.left = initPositionY+"px";
     //initial location of the bird  <-- you can delate this latter
     const bird = document.getElementById("bird"); 
-    // let birdX =  775.8;
-    // let birdY =  250;
-    let birdX =  getRandom(0.5*window.innerWidth, 0.95*window.innerWidth);
-    let birdY =  getRandom(0.25*window.innerHeight, 0.95*window.innerHeight);
+    let birdX =  775.8;
+    let birdY =  250;
+    // let birdX =  getRandom(0.5*window.innerWidth, 0.95*window.innerWidth);
+    // let birdY =  getRandom(0.05*window.innerHeight, 0.95*window.innerHeight);
     // console.log(tbirdX);
     // console.log(tbirdY);
     let birdPadding = 20;
@@ -85,9 +85,9 @@
     bird.style.top = birdY+"px";
 
     // create random position of the bird
-    function getRandom(min, max) {
-  return Math.floor(Math.random() * (max - min) ) + min;
-};
+//     function getRandom(min, max) {
+//   return Math.floor(Math.random() * (max - min) ) + min;
+// };
 
 
 
@@ -128,10 +128,11 @@ function ballFlight(ev){
   let s=1;
   const myInterval = setInterval(Flight, 1);
   function Flight() {
-    s++;
+    // st++; 
     // console.log(s++);
+    // console.log((s*s)*0.005); 
     PositionX+= x*0.01;
-    PositionY+= y*0.01+((s*s*4)*0.000005);
+    PositionY+= y*0.01+((s*s*5)*0.000005);
     ball.style.left =(PositionX)+"px";
     ball.style.top=(PositionY)+"px";
 
@@ -144,7 +145,7 @@ function ballFlight(ev){
     //the bird was hit
     if (PositionX>(birdX-1.7*birdPadding) && PositionX<(birdX+1.7*birdPadding)) {
       if (PositionY>(birdY-1.7*birdPadding) && PositionY<(birdY+1.7*birdPadding)) {
-        bird.style.backgroundColor = "black";
+        bird.style.backgroundColor = "red";
         clearInterval(myInterval);
         setTimeout( ()=> location.reload(), 2500);
 
