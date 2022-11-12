@@ -25,6 +25,7 @@
       position: absolute;
       top:0px;
       left: 0px;
+      z-index: 1;
       border-radius: 35px;
       padding:20px;
       background-color: palevioletred;
@@ -39,6 +40,11 @@
       padding: 20px;
       background-color: slategrey;
     }
+    canvas{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
 
 
   </style>
@@ -49,6 +55,9 @@
   <div id="field" >
     <div id="ball"></div>
     <div id="bird"></div>
+    <canvas width="1300" height="150"></canvas>
+    <!-- <canvas >  dd  </canvas> -->
+
  
     
   </div>
@@ -71,18 +80,25 @@
     let initPositionY = 350;
     ball.style.top = initPositionX+"px";
     ball.style.left = initPositionY+"px";
+
     //initial location of the bird  <-- you can delate this latter
     const bird = document.getElementById("bird"); 
     // let birdX =  775.8;
     // let birdY =  250;
     let birdX =  getRandom(0.5*window.innerWidth, 0.95*window.innerWidth);
     let birdY =  getRandom(0.25*window.innerHeight, 0.95*window.innerHeight);
-    // console.log(tbirdX);
-    // console.log(tbirdY);
     let birdPadding = 20;
     bird.style.padding=birdPadding+"px";
     bird.style.left = birdX+"px";
     bird.style.top = birdY+"px";
+
+    // // drow line from the ball 
+    const canvas = document.querySelector("canvas");  // this is an area inside which we can drow a line 
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight; 
+    // const inHeight = window.innerHeight-100;
+    var ctx = canvas.getContext("2d");
+
 
     // create random position of the bird
     function getRandom(min, max) {
@@ -102,15 +118,28 @@
     box.addEventListener("mousemove", updatePosition);
   }
 
-  function stopMouse(event){
-   box.removeEventListener("mousemove", updatePosition);
-   ballFlight(event);
-}
-
   function updatePosition(event){
     ball.style.top=(event.pageY-25)+"px";
     ball.style.left =(event.pageX-25)+"px";
+
+    console.log(initPositionX);
+
+    // drow line 
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    ctx.beginPath();
+    let test = 270; 
+    ctx.moveTo(initPositionX, initPositionY);
+    ctx.lineTo(event.pageX, event.pageY);
+    ctx.stroke();
   }
+
+  function stopMouse(event){
+   box.removeEventListener("mousemove", updatePosition);
+   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+   ballFlight(event);
+}
+
+  
 
  
 
@@ -154,6 +183,11 @@ function ballFlight(ev){
 }
 
 }
+
+
+
+
+
 
 
 
